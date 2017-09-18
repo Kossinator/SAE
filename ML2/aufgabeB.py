@@ -1,36 +1,32 @@
 
-#Aufgabe A:
+import matplotlib.pyplot as plt
 
 import pandas as pd
 
-vehicle_typs = pd.read_csv("../data/ML_2.csv")
 
-vehicle_typs = vehicle_typs.values
+def read_csv(path):
 
-new_vehicle_typs = []
+    vehicle_typs = pd.read_csv(path)
 
-for type in vehicle_typs:
+    vehicle_typs = vehicle_typs.values
 
-    type = str(type[0])
+    new_vehicle_typs = []
 
-    kg = type.split(";")[0]
+    for type in vehicle_typs:
 
-    wheels = type.split(";")[1]
+        type = str(type[0])
 
-    vehicle_type = type.split(";")[2]
+        kg = type.split(";")[0]
 
-    new_arr = [kg, wheels, vehicle_type]
+        wheels = type.split(";")[1]
 
-    new_vehicle_typs.append(new_arr)
+        vehicle_type = type.split(";")[2]
 
-vehicle_typs = new_vehicle_typs
+        new_arr = [float(kg), float(wheels), vehicle_type]
 
+        new_vehicle_typs.append(new_arr)
 
-
-
-#Aufgabe B:
-
-import matplotlib.pyplot as plt
+    return new_vehicle_typs
 
 
 def column(type):
@@ -38,6 +34,8 @@ def column(type):
     bicycles_weight = []
 
     bicycles_wheels = []
+
+    vehicle_typs = read_csv("../data/ML_2.csv")
 
     for v in vehicle_typs:
 
@@ -49,14 +47,17 @@ def column(type):
 
     return {"weight": bicycles_weight, "wheels": bicycles_wheels}
 
+def print_on_console():
+    print(read_csv("../data/ML_2.csv"))
 
-plt.plot(column("Fahrrad")["weight"], column("Fahrrad")["wheels"], 'ro')
+def plot_it():
 
-plt.plot(column("Motorrad")["weight"], column("Motorrad")["wheels"], 'bo')
+    plt.plot(column("Fahrrad")["weight"], column("Fahrrad")["wheels"], 'ro')
 
-plt.plot(column("PKW")["weight"], column("PKW")["wheels"], 'go')
+    plt.plot(column("Motorrad")["weight"], column("Motorrad")["wheels"], 'bo')
 
+    plt.plot(column("PKW")["weight"], column("PKW")["wheels"], 'go')
 
-plt.axis([-100, 1000, 0, 5])
+    plt.axis([-100, 1000, 0, 5])
 
-plt.show()
+    plt.show()
